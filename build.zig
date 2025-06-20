@@ -10,6 +10,15 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    // Add "check" command to quickly check if the project compiles.
+    const check = b.addTest(.{
+        .root_source_file = b.path("src/tests.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    b.step("check", "Check if project compiles").dependOn(&check.step);
+
+    // Add "test" command.
     const unit_tests = b.addTest(.{
         .root_source_file = b.path("src/tests.zig"),
         .target = target,
