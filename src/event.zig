@@ -1,6 +1,6 @@
 const std = @import("std");
 const Mutex = std.Thread.Mutex;
-const BoundedArray = std.BoundedArray;
+const BoundedArray = @import("bounded_array").BoundedArray;
 
 /// A generic event system.
 /// Conditionally thread-safe if `thread_safe` is set to true.

@@ -40,13 +40,13 @@ test "thread lifecycle test" {
 
         fn worker_fn(ctx: *@This()) void {
             while (!ctx.stoppable_thread.shouldStop()) {
-                std.time.sleep(10_000);
+                Thread.sleep(10_000);
             }
         }
     }{};
 
     try some_context.stoppable_thread.start(@TypeOf(some_context).worker_fn, .{&some_context});
-    std.time.sleep(50_000);
+    Thread.sleep(50_000);
     some_context.stoppable_thread.stop();
 
     try testing.expect(some_context.stoppable_thread.thread == null);
@@ -58,7 +58,7 @@ test "double start fails" {
         stoppable_thread: Self = Self{},
 
         pub fn worker_fn() void {
-            std.time.sleep(100_000);
+            Thread.sleep(100_000);
         }
     }{};
 
