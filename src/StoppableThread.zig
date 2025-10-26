@@ -6,12 +6,10 @@ const Self = @This();
 thread: ?Thread = null,
 stop_flag: atomic.Value(bool) = atomic.Value(bool).init(false),
 
+pub const StartError = error{AlreadyRunning} || std.Thread.SpawnError;
+
 /// Starts the thread with the given function and context.
-pub fn start(
-    self: *Self,
-    comptime func: anytype,
-    args: anytype,
-) !void {
+pub fn start(self: *Self, comptime func: anytype, args: anytype) StartError!void {
     if (self.thread != null) return error.AlreadyRunning;
 
     self.stop_flag.store(false, .release);
